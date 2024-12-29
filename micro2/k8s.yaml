@@ -1,0 +1,45 @@
+# micro2 Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro2-deployment
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: micro2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cc-aat
+      component: micro2
+  template:
+    metadata:
+      labels:
+        app: cc-aat
+        component: micro2
+    spec:
+      containers:
+        - name: micro2 # anything
+          image: nishsatishbmsce/micro2
+          ports:
+            - containerPort: 3031
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro2-service
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: micro2
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3031
+      protocol: TCP
+  selector:
+    app: cc-aat
+    component: micro2

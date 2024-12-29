@@ -1,0 +1,45 @@
+# micro2 Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-deployment
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: logger
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cc-aat
+      component: logger
+  template:
+    metadata:
+      labels:
+        app: cc-aat
+        component: logger
+    spec:
+      containers:
+        - name: logger # anything
+          image: nishsatishbmsce/logger-service
+          ports:
+            - containerPort: 3032
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: logger-service
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: logger
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3032
+      protocol: TCP
+  selector:
+    app: cc-aat
+    component: logger

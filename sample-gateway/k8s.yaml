@@ -1,0 +1,51 @@
+# Namespace Creation (one time for all services)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cc-aat
+
+# Gateway Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-gateway-deployment
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: sample-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cc-aat
+      component: sample-gateway
+  template:
+    metadata:
+      labels:
+        app: cc-aat
+        component: sample-gateway
+    spec:
+      containers:
+        - name: gateway # anything
+          image: nishsatishbmsce/cc_aat
+          ports:
+            - containerPort: 3030
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: cc-aat
+  labels:
+    app: cc-aat
+    component: sample-gateway
+spec:
+  type: NodePort
+  ports:
+    - port: 3030
+      protocol: TCP
+  selector:
+    app: cc-aat
+    component: sample-gateway

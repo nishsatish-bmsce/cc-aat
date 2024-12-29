@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "sample-gateway"
+		},
+		{
+			"path": "micro1"
+		},
+		{
+			"path": "micro2"
+		},
+		{
+			"path": "logger-service"
+		}
+	],
+	"settings": {}
+}
